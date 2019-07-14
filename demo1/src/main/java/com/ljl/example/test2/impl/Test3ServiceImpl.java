@@ -16,4 +16,8 @@ public class Test3ServiceImpl {
         test2Service.test2();
     }
 
+    public void test4(){
+
+    }
+
 }
