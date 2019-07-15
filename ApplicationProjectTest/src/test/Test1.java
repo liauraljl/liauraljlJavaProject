@@ -58,6 +58,8 @@ public class Test1 {
         String s1=lst.toString();
         lst.set(0,6);
         String s2=lst.toString();
-        int a=0;
     }
+
+    private void test5(){}
+
 }
