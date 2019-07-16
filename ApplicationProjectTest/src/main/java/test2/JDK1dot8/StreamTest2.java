@@ -1,6 +1,7 @@
 package test2.JDK1dot8;
 
-import Test.TestClass.GafeCat;
+
+import test2.TestClass.GafeCat;
 
 import java.util.ArrayList;
 import java.util.List;

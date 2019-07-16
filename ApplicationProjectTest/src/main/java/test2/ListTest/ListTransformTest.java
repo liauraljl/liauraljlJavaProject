@@ -1,8 +1,8 @@
 package test2.ListTest;
 
-import Test.TestClass.GafeCat;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
+import test2.TestClass.GafeCat;
 
 import java.util.ArrayList;
 import java.util.List;

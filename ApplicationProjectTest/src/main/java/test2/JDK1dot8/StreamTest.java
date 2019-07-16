@@ -1,6 +1,7 @@
 package test2.JDK1dot8;
 
-import Test.TestClass.WeChatInfo;
+
+import test2.TestClass.WeChatInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
