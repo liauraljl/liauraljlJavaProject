@@ -1,5 +1,6 @@
 package test.BlockingQueueTest.test2.tets21;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -28,6 +29,5 @@ public class ProducerConsumer1 {
 
         p1.start();p2.start();p3.start();p4.start();
         c1.start();c2.start();c3.start();c4.start();c5.start();
-
     }
 }
