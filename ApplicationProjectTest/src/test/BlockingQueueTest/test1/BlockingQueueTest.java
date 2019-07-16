@@ -35,6 +35,6 @@ public class BlockingQueueTest {
 
         Thread.sleep(2000);
         // 退出Executor
-        //service.shutdown();
+        service.shutdown();
     }
 }
