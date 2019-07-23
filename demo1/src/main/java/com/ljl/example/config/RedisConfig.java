@@ -16,10 +16,8 @@ import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSeriali
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import redis.clients.jedis.JedisPoolConfig;
 
-import javax.annotation.PostConstruct;
-
-/*@Configuration
-@EnableCaching*/
+@Configuration
+@EnableCaching
 @Slf4j
 public class RedisConfig {
 
@@ -102,14 +100,5 @@ public class RedisConfig {
         stringRedisTemplate.setEnableTransactionSupport(true);
         stringRedisTemplate.afterPropertiesSet();
         return stringRedisTemplate;
-    }
-
-
-    @PostConstruct
-    public void cleanRedisKey(){
-        //启动运行清除rediskey,消息队列中用到的key
-        StringBuilder sb = new StringBuilder("juke:mgr:msgId:").append("*");
-        redisTemplate().opsForValue().getOperations().delete(sb.toString());
-        log.info("执行清除redis用于存储消息队列锁的key！");
     }
 }

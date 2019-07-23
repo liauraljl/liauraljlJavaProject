@@ -29,7 +29,6 @@ public class Test3ServiceImpl implements Test3Service{
     private IdWorker idWorker;
 
     public void test3(){
-        test4();
         test2Service.test2();
     }
 
