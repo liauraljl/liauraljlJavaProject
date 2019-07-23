@@ -26,6 +26,11 @@ public class Demo1ApplicationTests {
 		test3Service.test3();
 	}
 
+	@Test
+	public void test5Test(){
+		test3Service.test5();
+	}
+
 
 
 }
