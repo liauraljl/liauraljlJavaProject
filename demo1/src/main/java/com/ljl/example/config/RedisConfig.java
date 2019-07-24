@@ -1,6 +1,10 @@
 package com.ljl.example.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.Redisson;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
+import org.redisson.config.SingleServerConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -100,5 +104,19 @@ public class RedisConfig {
         stringRedisTemplate.setEnableTransactionSupport(true);
         stringRedisTemplate.afterPropertiesSet();
         return stringRedisTemplate;
+    }
+
+    @Bean
+    public RedissonClient getRedisson(){
+        Config config = new Config();
+        SingleServerConfig singleServerConfig = config.useSingleServer()
+                .setAddress("redis://" + host + ":" + port)
+                .setDatabase(database)
+                .setTimeout(timeout)
+                .setPingConnectionInterval(60000);
+        if (null != pwd) {
+            singleServerConfig.setPassword(pwd);
+        }
+        return Redisson.create(config);
     }
 }

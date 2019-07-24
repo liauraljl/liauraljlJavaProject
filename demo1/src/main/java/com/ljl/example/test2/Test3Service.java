@@ -9,4 +9,6 @@ public interface Test3Service {
     void test4();
 
     void test5();
+
+    void redisLockTest();
 }

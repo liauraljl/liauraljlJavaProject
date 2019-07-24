@@ -36,6 +36,9 @@ public class Demo1ApplicationTests {
 		test3Service.test4();
 	}
 
-
+	@Test
+	public void redisLockTest(){
+		test3Service.redisLockTest();
+	}
 
 }

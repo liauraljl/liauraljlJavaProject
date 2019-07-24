@@ -16,6 +16,10 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<jedis.version>2.9.1</jedis.version>
+		<redisson.version>3.7.3</redisson.version>
+		<fastjson.version>1.2.53</fastjson.version>
+		<guava.version>15.0</guava.version>
 	</properties>
 
 	<dependencies>
@@ -45,9 +49,9 @@
 			<artifactId>commons-pool2</artifactId>
 		</dependency>
 		<dependency>
-			<artifactId>jedis</artifactId>
 			<groupId>redis.clients</groupId>
-			<version>2.9.1</version>
+			<artifactId>jedis</artifactId>
+			<version>${jedis.version}</version>
 		</dependency>
 		<dependency>
 			<artifactId>jackson-annotations</artifactId>
@@ -61,7 +65,23 @@
 			<artifactId>jackson-databind</artifactId>
 			<groupId>com.fasterxml.jackson.core</groupId>
 		</dependency>
+		<dependency>
+			<groupId>org.redisson</groupId>
+			<artifactId>redisson</artifactId>
+			<version>${redisson.version}</version>
+		</dependency>
 		<!-- redis end-->
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>${fastjson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
 
 	</dependencies>
 
