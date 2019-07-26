@@ -5,7 +5,7 @@ package com.ljl.example.common;
  */
 public class RedisConstant {
 
-    public static final String TEST_HASH="example:test-hash:%s";
+    public static final String TEST_HASH="example:mapper-hash:%s";
 
-    public static final String TEST_LOCK="example:test-lock:%s";
+    public static final String TEST_LOCK="example:mapper-lock:%s";
 }

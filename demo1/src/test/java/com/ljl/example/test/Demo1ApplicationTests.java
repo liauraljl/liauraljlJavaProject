@@ -1,9 +1,8 @@
 package com.ljl.example.test;
 
 import com.ljl.example.Demo1Application;
-import com.ljl.example.test2.Test2Service;
-import com.ljl.example.test2.impl.Test2ServiceImpl;
-import com.ljl.example.test2.impl.Test3ServiceImpl;
+import com.ljl.example.service.Test2Service;
+import com.ljl.example.service.impl.Test3ServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +38,11 @@ public class Demo1ApplicationTests {
 	@Test
 	public void redisLockTest(){
 		test3Service.redisLockTest();
+	}
+
+	@Test
+	public void processDbTest(){
+		test3Service.dbTest();
 	}
 
 }
