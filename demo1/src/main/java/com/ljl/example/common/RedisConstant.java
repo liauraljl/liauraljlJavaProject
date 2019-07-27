@@ -5,7 +5,18 @@ package com.ljl.example.common;
  */
 public class RedisConstant {
 
+    /**
+     * test hash
+     */
     public static final String TEST_HASH="example:mapper-hash:%s";
 
+    /**
+     * Redis锁key
+     */
     public static final String TEST_LOCK="example:mapper-lock:%s";
+
+    /**
+     * 流程信息key
+     */
+    public static final String PROCESS_KEY="example:process:pid:%s";
 }

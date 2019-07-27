@@ -1,6 +1,8 @@
 package com.ljl.example.test;
 
+import com.alibaba.fastjson.JSON;
 import com.ljl.example.Demo1Application;
+import com.ljl.example.model.Process;
 import com.ljl.example.service.Test2Service;
 import com.ljl.example.service.impl.Test3ServiceImpl;
 import org.junit.Test;
@@ -45,4 +47,14 @@ public class Demo1ApplicationTests {
 		test3Service.dbTest();
 	}
 
+	@Test
+	public void readCacheTest(){
+		Process process=test3Service.readCache();
+		System.out.println(JSON.toJSONString(process));
+	}
+
+	@Test
+	public void updateProcessTest(){
+		test3Service.updateProcessTest();
+	}
 }

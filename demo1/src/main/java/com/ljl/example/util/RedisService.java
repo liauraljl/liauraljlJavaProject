@@ -266,4 +266,25 @@ public class RedisService {
             }
         }
     }
+
+    public boolean hasKey(String key){
+        return redisTemplate.hasKey(key)||stringRedisTemplate.hasKey(key);
+    }
+
+    public void set(String key,String value){
+        stringRedisTemplate.opsForValue().set(key,value);
+    }
+
+    public String get(String key){
+        Object obj=stringRedisTemplate.opsForValue().get(key);
+        return obj==null? StringUtil.EMPTY:obj.toString();
+    }
+
+    public void set(String key,String value,long time){
+        stringRedisTemplate.opsForValue().set(key,value,time,TimeUnit.SECONDS);
+    }
+
+    public boolean delKey(String key){
+        return stringRedisTemplate.delete(key);
+    }
 }
