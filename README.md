@@ -1,2 +1,2 @@
 # liauraljlJavaProjectTest1
-my first java project test
+my first java project mapper
