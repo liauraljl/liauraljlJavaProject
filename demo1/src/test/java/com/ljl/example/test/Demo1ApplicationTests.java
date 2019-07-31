@@ -41,4 +41,9 @@ public class Demo1ApplicationTests {
 		test3Service.redisLockTest();
 	}
 
+	@Test
+	public void start() throws InterruptedException {
+		Thread.sleep(1000000000L);
+	}
+
 }
