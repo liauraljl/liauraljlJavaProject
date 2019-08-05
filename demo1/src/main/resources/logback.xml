@@ -18,7 +18,7 @@
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>
-                [juku.job.service] [%d] %p [%c:%L] %m%n
+                [com.ljl.example.test.demo1] [%d] %p [%c:%L] %m%n
             </pattern>
             <charset>UTF-8</charset>
         </encoder>
