@@ -1,9 +1,12 @@
 package com.ljl.example.kafka;
 
 import com.alibaba.fastjson.JSON;
+import com.ljl.example.redis.RedisConstant;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Component;
@@ -11,6 +14,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author baiyu
@@ -24,6 +28,9 @@ public class KafkaConsumer {
 
     @Value("${kafka.consumer.topic}")
     private String topic;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 消费数据
@@ -59,8 +66,19 @@ public class KafkaConsumer {
                 final ConsumerRecord<String, String> record = recordList.get(i);
                 completableFutures[i] = CompletableFuture.supplyAsync(()-> {
                     try {
-                        log.info("doListMsg kafka one,data:{},partition:{}",JSON.toJSONString(record.value()),record.partition());
-                        //doOneMsg(record);
+                        String msg=record.value();
+                        //消息幂等处理
+                        //String msgId=JSON.parseObject(JSON.toJSONString(msg)).getString("msgId");
+                        String msgId=JSON.parseObject(msg).getString("msgId");
+                        String key=String.format(RedisConstant.KAFKA_MSG_KEY,msgId);
+                        Boolean check=redisTemplate.opsForValue().setIfAbsent(key,msgId);
+                        if(check){
+                            //doOneMsg(record);
+                            log.info("doListMsg kafka one,data:{},partition:{}",JSON.toJSONString(msg),record.partition());
+                            redisTemplate.expire(key,30, TimeUnit.SECONDS);
+                        }else{
+                            log.info("消息队列的重复消息{}，key已经存在:{}",msg,key);
+                        }
                     } catch (Exception e) {
                         log.error("处理数据失败：topic:{},数据：{},error:{}", topic, JSON.toJSONString(record.value()), e.getMessage(), e);
                     }

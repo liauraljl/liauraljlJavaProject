@@ -17,10 +17,10 @@ public class ProducerCallback implements ListenableFutureCallback<SendResult<Str
 
     private final Gson gson = new Gson();
 
-    public ProducerCallback(long startTime, String key, String map) {
+    public ProducerCallback(long startTime, String key, String message) {
         this.startTime = startTime;
         this.key = key;
-        this.message = map;
+        this.message = message;
     }
 
 

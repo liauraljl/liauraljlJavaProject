@@ -2,13 +2,13 @@ package com.ljl.example.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.ljl.example.common.IdWorker;
-import com.ljl.example.common.RedisConstant;
+import com.ljl.example.redis.RedisConstant;
 import com.ljl.example.job.TaskExecutor;
 import com.ljl.example.mapper.ProcessMapper;
 import com.ljl.example.model.Process;
 import com.ljl.example.service.Test2Service;
 import com.ljl.example.service.Test3Service;
-import com.ljl.example.util.RedisService;
+import com.ljl.example.redis.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -37,6 +37,7 @@ public class ProducerController {
         try {
             log.info("kafka的消息={}", gson.toJson(message));
             for(int i=0;i<30;i++){
+                message.setTitle(message.getTitle()+(i+1));
                 kafkaProducer.send(topic, "key", message);
             }
             log.info("发送kafka成功.");

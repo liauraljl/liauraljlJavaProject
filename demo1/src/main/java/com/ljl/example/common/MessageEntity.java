@@ -1,21 +1,15 @@
 package com.ljl.example.common;
 
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
-@EqualsAndHashCode
-public class MessageEntity {
+import java.io.Serializable;
+
+@Data
+public class MessageEntity implements Serializable {
+    private static final long serialVersionUID=1L;
     private String title;
     private String body;
-
-    @Override
-    public String toString() {
-        return "MessageEntity{" +
-                "title='" + title + '\'' +
-                ", body='" + body + '\'' +
-                '}';
-    }
 }

@@ -1,4 +1,4 @@
-package com.ljl.example.common;
+package com.ljl.example.redis;
 
 import org.springframework.data.redis.core.ZSetOperations;
 
