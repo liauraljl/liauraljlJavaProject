@@ -1,0 +1,38 @@
+Spring Data 的另一个强大功能，是根据方法名称自动实现功能。
+
+比如：你的方法名叫做：findByTitle，那么它就知道你是根据title查询，然后自动帮你完成，无需写实现类。
+
+当然，方法名称要符合一定的约定：
+
+Keyword                   	Sample
+And	                        findByNameAndPrice
+Or	                        findByNameOrPrice
+Is	                        findByName
+Not	                        findByNameNot
+Between	                    findByPriceBetween
+LessThanEqual	            findByPriceLessThan
+GreaterThanEqual        	findByPriceGreaterThan
+Before	                    findByPriceBefore
+After	                    findByPriceAfter
+Like	                    findByNameLike
+StartingWith	            findByNameStartingWith
+EndingWith	                findByNameEndingWith
+Contains/Containing	        findByNameContaining
+In	                        findByNameIn(Collection<String>names)
+NotIn	                    findByNameNotIn(Collection<String>names)
+Near	                    findByStoreNear
+True	                    findByAvailableTrue
+False	                    findByAvailableFalse
+OrderBy	                    findByAvailableTrueOrderByNameDesc
+例如，我们来按照价格区间查询，定义这样的一个方法：
+
+public interface ItemRepository extends ElasticsearchRepository<Item,Long> {
+
+    /**
+     * @Description:根据价格区间查询
+     * @Param price1
+     * @Param price2
+     * @Author: https://blog.csdn.net/chen_2890
+     */
+    List<Item> findByPriceBetween(double price1, double price2);
+}

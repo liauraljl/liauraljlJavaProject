@@ -1,11 +1,17 @@
 package com.ljl.example.elasticsearch.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Document(indexName = "item",type = "docs", shards = 1, replicas = 0)
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Item {
     /**
      * @Description: @Id注解必须是springframework包下的
