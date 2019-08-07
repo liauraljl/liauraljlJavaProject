@@ -64,8 +64,87 @@ public class ElasticSearchTest {
         itemService.testQueryAll();
     }
 
+    /**
+     * 按照价格区间查询
+     */
     @Test
     public void queryByPriceBetween(){
         itemService.queryByPriceBetween();
+    }
+
+    /**
+     *
+     * @Description:matchQuery底层采用的是词条匹配查询
+     *@Author: https://blog.csdn.net/chen_2890
+     */
+    @Test
+    public void testMathQuery(){
+        itemService.testMathQuery();
+    }
+
+    /**
+     * @Description:
+     * termQuery:功能更强大，除了匹配字符串以外，还可以匹配
+     * int/long/double/float/....
+     * @Author: https://blog.csdn.net/chen_2890
+     */
+    @Test
+    public void testTermQuery(){
+        itemService.testTermQuery();
+    }
+
+    /**
+     * @Description:布尔查询
+     * @Author: https://blog.csdn.net/chen_2890
+     */
+    @Test
+    public void testBooleanQuery(){
+        itemService.testBooleanQuery();
+    }
+
+    /**
+     * @Description:模糊查询
+     * @Author: https://blog.csdn.net/chen_2890
+     */
+    @Test
+    public void testFuzzyQuery(){
+        itemService.testFuzzyQuery();
+    }
+
+    /**
+     * @Description:分页查询
+     * @Author: https://blog.csdn.net/chen_2890
+     */
+    @Test
+    public void searchByPage(){
+        itemService.searchByPage();
+    }
+
+    /**
+     * @Description:排序查询
+     * @Author: https://blog.csdn.net/chen_2890
+     */
+    @Test
+    public void searchAndSort(){
+        itemService.searchAndSort();
+    }
+
+
+    /**
+     * @Description:按照品牌brand进行分组
+     * @Author: https://blog.csdn.net/chen_2890
+     */
+    @Test
+    public void testAgg(){
+        itemService.testAgg();
+    }
+
+    /**
+     * @Description:嵌套聚合，求平均值
+     * @Author: https://blog.csdn.net/chen_2890
+     */
+    @Test
+    public void testSubAgg(){
+        itemService.testSubAgg();
     }
 }

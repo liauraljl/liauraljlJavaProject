@@ -1,0 +1,61 @@
+2.5.1 聚合基本概念
+Elasticsearch中的聚合，包含多种类型，最常用的两种，一个叫桶，一个叫度量：
+
+桶（bucket）
+
+桶的作用，是按照某种方式对数据进行分组，每一组数据在ES中称为一个桶，例如我们根据国籍对人划分，可以得到中国桶、英国桶，日本桶……或者我们按照年龄段对人进行划分：010,1020,2030,3040等。
+
+Elasticsearch中提供的划分桶的方式有很多：
+
+Date Histogram Aggregation：根据日期阶梯分组，例如给定阶梯为周，会自动每周分为一组
+Histogram Aggregation：根据数值阶梯分组，与日期类似
+Terms Aggregation：根据词条内容分组，词条内容完全匹配的为一组
+Range Aggregation：数值和日期的范围分组，指定开始和结束，然后按段分组
+……
+综上所述，我们发现bucket aggregations 只负责对数据进行分组，并不进行计算，因此往往bucket中往往会嵌套另一种聚合：metrics aggregations即度量
+
+度量（metrics）
+
+分组完成以后，我们一般会对组中的数据进行聚合运算，例如求平均值、最大、最小、求和等，这些在ES中称为度量
+
+比较常用的一些度量聚合方式：
+
+Avg Aggregation：求平均值
+Max Aggregation：求最大值
+Min Aggregation：求最小值
+Percentiles Aggregation：求百分比
+Stats Aggregation：同时返回avg、max、min、sum、count等
+Sum Aggregation：求和
+Top hits Aggregation：求前几
+Value Count Aggregation：求总数
+……
+<************important！！！！！！！！！！*************>
+注意：在ES中，需要进行聚合、排序、过滤的字段其处理方式比较特殊，因此不能被分词。这里我们将color和make这两个文字类型的字段设置为keyword类型，这个类型不会被分词，将来就可以参与聚合
+<************important！！！！！！！！！！*************>
+
+
+（1）统计某个字段的数量
+  ValueCountBuilder vcb=  AggregationBuilders.count("count_uid").field("uid");
+（2）去重统计某个字段的数量（有少量误差）
+ CardinalityBuilder cb= AggregationBuilders.cardinality("distinct_count_uid").field("uid");
+（3）聚合过滤
+FilterAggregationBuilder fab= AggregationBuilders.filter("uid_filter").filter(QueryBuilders.queryStringQuery("uid:001"));
+（4）按某个字段分组
+TermsBuilder tb=  AggregationBuilders.terms("group_name").field("name");
+（5）求和
+SumBuilder  sumBuilder=	AggregationBuilders.sum("sum_price").field("price");
+（6）求平均
+AvgBuilder ab= AggregationBuilders.avg("avg_price").field("price");
+（7）求最大值
+MaxBuilder mb= AggregationBuilders.max("max_price").field("price");
+（8）求最小值
+MinBuilder min=	AggregationBuilders.min("min_price").field("price");
+（9）按日期间隔分组
+DateHistogramBuilder dhb= AggregationBuilders.dateHistogram("dh").field("date");
+（10）获取聚合里面的结果
+TopHitsBuilder thb=  AggregationBuilders.topHits("top_result");
+（11）嵌套的聚合
+NestedBuilder nb= AggregationBuilders.nested("negsted_path").path("quests");
+（12）反转嵌套
+AggregationBuilders.reverseNested("res_negsted").path("kps ");
+
