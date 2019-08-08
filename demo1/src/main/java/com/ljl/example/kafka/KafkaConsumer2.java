@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Slf4j
 @SuppressWarnings("unchecked")
-public class KafkaConsumer {
+public class KafkaConsumer2 {
 
     @Value("${kafka.consumer.topic}")
     private String topic;
@@ -38,10 +38,10 @@ public class KafkaConsumer {
      * @param
      * @param ack
      */
-    @KafkaListener(topics = "${kafka.consumer.topic}", groupId = "group1", containerFactory = "batchContainerFactory")
+    @KafkaListener(topics = "${kafka.consumer.topic}", groupId = "group2", containerFactory = "batchContainerFactory")
     public void consumerMsg(List<ConsumerRecord<String, String>> recordList, Acknowledgment ack) {
         try {
-            System.out.println("消费group1");
+            System.out.println("消费group2");
             if(!CollectionUtils.isEmpty(recordList)){
                 //recordList.forEach(o-> System.out.println(JSON.toJSONString(o.value())));
                 doListMsg(recordList);
