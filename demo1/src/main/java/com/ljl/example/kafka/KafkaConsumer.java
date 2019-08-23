@@ -38,7 +38,7 @@ public class KafkaConsumer {
      * @param
      * @param ack
      */
-    @KafkaListener(topics = "${kafka.consumer.topic}", groupId = "process", containerFactory = "batchContainerFactory")
+    //@KafkaListener(topics = "${kafka.consumer.topic}", groupId = "process", containerFactory = "batchContainerFactory")
     public void consumerMsg(List<ConsumerRecord<String, String>> recordList, Acknowledgment ack) {
         try {
             if(!CollectionUtils.isEmpty(recordList)){
