@@ -30,6 +30,11 @@
             <artifactId>com.springsource.com.google.common.collect</artifactId>
             <version>0.8.0.20080820</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.53</version>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
