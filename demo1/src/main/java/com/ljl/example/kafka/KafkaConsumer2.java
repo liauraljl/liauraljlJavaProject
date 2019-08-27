@@ -38,7 +38,7 @@ public class KafkaConsumer2 {
      * @param
      * @param ack
      */
-    @KafkaListener(topics = "${kafka.consumer.topic}", groupId = "group2", containerFactory = "batchContainerFactory")
+    //@KafkaListener(topics = "${kafka.consumer.topic}", groupId = "group2", containerFactory = "batchContainerFactory")
     public void consumerMsg(List<ConsumerRecord<String, String>> recordList, Acknowledgment ack) {
         try {
             System.out.println("消费group2");
