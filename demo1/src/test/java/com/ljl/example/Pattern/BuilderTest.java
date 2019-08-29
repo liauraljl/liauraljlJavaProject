@@ -17,5 +17,8 @@ public class BuilderTest {
         User user=User.builder().name("Miss li").age(25).build();
         user=user.toBuilder().age(27).build();
         System.out.println(JSON.toJSONString(user));
+
+        User user2= User.builder().build();
+        //User
     }
 }

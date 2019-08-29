@@ -63,7 +63,12 @@ public class RedisSetRemoveTest {
             System.out.println(zSetModel.getValue());
         }
         System.out.println("");
+    }
 
-
+    @Test
+    public void stringIncrementTest(){
+        String key="string:test:1";
+        redisTemplate.opsForValue().set(key,10);
+        redisTemplate.opsForValue().increment(key,-1);
     }
 }
