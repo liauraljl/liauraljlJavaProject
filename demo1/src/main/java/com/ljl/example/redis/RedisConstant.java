@@ -27,4 +27,9 @@ public class RedisConstant {
      */
     public static final String KAFKA_MSG_KEY="demo1:kafka:msg:%s";
 
+    /**
+     * piepline 批量set key
+     */
+    public static final String TEST_PIEPLINE_BATCHSET="example:piepline:string:process:%s";
+
 }

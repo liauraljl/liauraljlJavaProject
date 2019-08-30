@@ -2,18 +2,23 @@ package com.ljl.example.redis;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
+import com.ljl.example.model.Process;
 import com.ljl.example.util.StringUtil;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.StringRedisConnection;
+import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.lang.Nullable;
 import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -286,5 +291,116 @@ public class RedisService {
 
     public boolean delKey(String key){
         return stringRedisTemplate.delete(key);
+    }
+
+    /**
+     * 获取所有KEY的Zset数据的size
+     * @param keys
+     * @return
+     */
+    public List<Long> findKeysSize(final List<String> keys) {
+        return stringRedisTemplate.executePipelined(new RedisCallback<Long>() {
+            @Nullable
+            @Override
+            public Long doInRedis(RedisConnection connection) throws DataAccessException {
+                connection.openPipeline();
+                for (String key : keys) {
+                    connection.zSetCommands().zCard(key.getBytes());
+                }
+                return null;
+            }
+        });
+    }
+
+    /**
+     * 获取所有KEY的Zset数据
+     * @param keys
+     * @return
+     */
+    public List<Set<ZSetOperations.TypedTuple<String>>> findKeysValues(final List<String> keys,final double minScore,final double maxScore) {
+        return stringRedisTemplate.executePipelined(new RedisCallback<Set<ZSetOperations.TypedTuple<String>>>() {
+            @Nullable
+            @Override
+            public Set<ZSetOperations.TypedTuple<String>> doInRedis(RedisConnection connection) throws DataAccessException {
+                connection.openPipeline();
+                for (String key : keys) {
+                    connection.zSetCommands().zRangeByScoreWithScores(key.getBytes(),minScore,maxScore);
+                }
+                return null;
+            }
+        });
+    }
+
+    /**
+     * 获取前缀相同的所有key
+     * @param pattern
+     * @return
+     */
+    public Set<String> scan(String pattern) {
+        return (Set<String>)redisTemplate.execute((RedisCallback<Set<String>>)redisConnection -> {
+            Set<String> binaryKeys = new HashSet<>();
+            Cursor<byte[]> cursor = redisConnection.scan(new ScanOptions.ScanOptionsBuilder().match(pattern).count(Integer.MAX_VALUE).build());
+            while (cursor.hasNext()) {
+                binaryKeys.add(new String(cursor.next()));
+            }
+            redisConnection.closePipeline();
+            return binaryKeys;
+        });
+    }
+
+    /**
+     * 批量删除key
+     * @param keys
+     * @return
+     */
+    public void deleteKeys(final Set<String> keys) {
+        stringRedisTemplate.executePipelined(new RedisCallback<Object>() {
+            @Nullable
+            @Override
+            public Object doInRedis(RedisConnection connection) throws DataAccessException {
+                connection.openPipeline();
+                for (String key : keys) {
+                    connection.del(key.getBytes());
+                }
+                connection.closePipeline();
+                return null;
+            }
+        });
+    }
+
+    /**
+     * 管道批量设值
+     * @param processList
+     * @return
+     */
+    public void batchSetValue(List<Process> processList){
+        stringRedisTemplate.executePipelined((RedisCallback<List<Object>>) redisConnection -> {
+            StringRedisConnection stringRedisConnection=(StringRedisConnection)redisConnection;
+            stringRedisConnection.openPipeline();
+            for(Process process:processList){
+                stringRedisConnection.set(String.format(RedisConstant.TEST_PIEPLINE_BATCHSET,process.getId()),process.getProcessName());
+            }
+            stringRedisConnection.closePipeline();
+            return null;
+        });
+    }
+
+    /**
+     * 管道批量设值2
+     * @param processList
+     * @return
+     */
+    public List<Object> batchSetValue2(List<Process> processList){
+        return stringRedisTemplate.executePipelined(new RedisCallback<List<Object>>() {
+            @Override
+            public List<Object> doInRedis(RedisConnection redisConnection) throws DataAccessException {
+                StringRedisConnection stringRedisConnection = (StringRedisConnection) redisConnection;
+                stringRedisConnection.openPipeline();
+                for (Process process : processList) {
+                    stringRedisConnection.set(String.format(RedisConstant.TEST_PIEPLINE_BATCHSET, process.getId()), process.getProcessName());
+                }
+                return stringRedisConnection.closePipeline();
+            }
+        });
     }
 }

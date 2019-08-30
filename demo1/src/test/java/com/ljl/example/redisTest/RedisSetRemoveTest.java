@@ -1,6 +1,7 @@
 package com.ljl.example.redisTest;
 
 import com.ljl.example.Demo1Application;
+import com.ljl.example.service.redisTest.PipelineTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class RedisSetRemoveTest {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private PipelineTest pipelineTest;
 
     @Test
     public void addSetTest() {
@@ -70,5 +74,10 @@ public class RedisSetRemoveTest {
         String key="string:test:1";
         redisTemplate.opsForValue().set(key,10);
         redisTemplate.opsForValue().increment(key,-1);
+    }
+
+    @Test
+    public void pipelineTest(){
+        pipelineTest.batchSetCompareTest();
     }
 }
