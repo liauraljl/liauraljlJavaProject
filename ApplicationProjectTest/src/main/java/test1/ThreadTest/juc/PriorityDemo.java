@@ -1,4 +1,4 @@
-package test1.ThreadTest;
+package test1.ThreadTest.juc;
 
 /**
  * Created by liaura_ljl on 2019/2/28.

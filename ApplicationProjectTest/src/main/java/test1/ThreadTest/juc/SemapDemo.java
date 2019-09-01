@@ -1,4 +1,4 @@
-package test1.ThreadTest;
+package test1.ThreadTest.juc;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -9,6 +9,7 @@ import java.util.concurrent.Semaphore;
  */
 public class SemapDemo implements Runnable {
     final Semaphore semp=new Semaphore(5);
+    static final long m=System.currentTimeMillis();
     @Override
     public void run() {
         try{
@@ -16,6 +17,7 @@ public class SemapDemo implements Runnable {
             //模拟耗时操作
             Thread.sleep(2000);
             System.out.println(Thread.currentThread().getId()+":done");
+            System.out.println(System.currentTimeMillis()-m);
             semp.release();
         }catch (InterruptedException e){
             e.printStackTrace();

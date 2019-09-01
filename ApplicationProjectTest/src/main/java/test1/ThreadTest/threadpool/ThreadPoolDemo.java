@@ -1,4 +1,4 @@
-package test1.ThreadTest;
+package test1.ThreadTest.threadpool;
 
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
