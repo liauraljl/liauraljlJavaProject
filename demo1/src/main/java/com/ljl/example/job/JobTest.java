@@ -19,7 +19,7 @@ public class JobTest {
     @Qualifier("testThreadPoolTaskExecutor2")
     ThreadPoolTaskExecutor testThreadPoolTaskExecutor2;
 
-    @Scheduled(cron = "*/20 * * * * ?")
+    //@Scheduled(cron = "*/20 * * * * ?")
     public void jobTest(){
         System.out.println("job executor start!"+ JSON.toJSONString(new Date()));
         int a=1;

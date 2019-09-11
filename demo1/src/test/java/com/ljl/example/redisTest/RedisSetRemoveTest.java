@@ -1,6 +1,8 @@
 package com.ljl.example.redisTest;
 
 import com.ljl.example.Demo1Application;
+import com.ljl.example.service.redisTest.BitTest;
+import com.ljl.example.service.redisTest.HyperLogLogTest;
 import com.ljl.example.service.redisTest.PipelineTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +24,12 @@ public class RedisSetRemoveTest {
 
     @Autowired
     private PipelineTest pipelineTest;
+
+    @Autowired
+    private HyperLogLogTest hyperLogLogTest;
+
+    @Autowired
+    private BitTest bitTest;
 
     @Test
     public void addSetTest() {
@@ -79,5 +87,15 @@ public class RedisSetRemoveTest {
     @Test
     public void pipelineTest(){
         pipelineTest.batchSetCompareTest();
+    }
+
+    @Test
+    public void hyperLogLogTest(){
+        hyperLogLogTest.HyerLogLogTest();
+    }
+
+    @Test
+    public void bitTest1(){
+        bitTest.bitTest1();
     }
 }

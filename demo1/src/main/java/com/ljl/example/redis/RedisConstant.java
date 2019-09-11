@@ -32,4 +32,13 @@ public class RedisConstant {
      */
     public static final String TEST_PIEPLINE_BATCHSET="example:piepline:string:process:%s";
 
+    /**
+     * hyperloglog 测试  key
+     */
+    public static final String TEST_HYPERLOGLOG_KEY1="example:test:hyperloglog:%s";
+
+    /**
+     * bit 测试  key
+     */
+    public static final String TEST_BIT_KEY1="example:test:bit:%s";
 }
