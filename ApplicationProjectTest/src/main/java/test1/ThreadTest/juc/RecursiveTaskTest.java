@@ -7,14 +7,14 @@ import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.RecursiveTask;
 
 /**
- * Created by liaura_ljl on 2019/9/5.
+ * Created by liaura_ljl on 2019/9/16.
  */
-public class CountTask extends RecursiveTask<Long> {
+public class RecursiveTaskTest extends RecursiveTask<Long> {
     private static final int THRESHOLD=10000;
     private long start;
     private long end;
 
-    public CountTask(long start,long end){
+    public RecursiveTaskTest(long start,long end){
         this.start=start;
         this.end=end;
     }
@@ -30,17 +30,17 @@ public class CountTask extends RecursiveTask<Long> {
         }else {
             //分成100个任务
             long step=(start+end)/100;
-            ArrayList<CountTask> subTasks=new ArrayList<CountTask>();
+            ArrayList<RecursiveTaskTest> subTasks=new ArrayList<RecursiveTaskTest>();
             long pos=start;
             for(int i=0;i<100;i++){
                 long lastOne=pos+step;
                 if(lastOne>end)lastOne=end;
-                CountTask subTask=new CountTask(pos,lastOne);
+                RecursiveTaskTest subTask=new RecursiveTaskTest(pos,lastOne);
                 pos+=step+1;
                 subTasks.add(subTask);
                 subTask.fork();
             }
-            for(CountTask t:subTasks){
+            for(RecursiveTaskTest t:subTasks){
                 sum+=t.join();
             }
         }
@@ -49,7 +49,7 @@ public class CountTask extends RecursiveTask<Long> {
 
     public static void main(String[] args){
         ForkJoinPool forkJoinPool=new ForkJoinPool();
-        CountTask task=new CountTask(0,200000L);
+        RecursiveTaskTest task=new RecursiveTaskTest(0,200000L);
         ForkJoinTask<Long> result=forkJoinPool.submit(task);
         try{
             long res= 0;
