@@ -17,7 +17,7 @@ public class MsgTask {
     private RedisMQ redisMQ;
     // @Value("${mq.list.first}") private String MQ_LIST_FIRST;
 
-    @Scheduled(cron="*/5 * * * * *")
+    //@Scheduled(cron="*/5 * * * * *")
     public void sendMsg() {
         // 消费
         List<String> msgs = redisMQ.consume(redisMQ.getRoutes().get(0).getList());

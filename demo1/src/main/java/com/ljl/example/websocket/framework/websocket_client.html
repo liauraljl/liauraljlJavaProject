@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script type="text/javascript">
+    //语法 var Socket = new WebSocket(url, [protocol] );
+    var ws = new WebSocket("ws://localhost:8888/ws");
+    //连接建立时触发
+    ws.onopen = function(evt) {
+        console.log("Connection open ...");
+        ws.send("TEST_WebSockets!");
+    };
+    //接收消息时触发
+    ws.onmessage = function(evt) {
+        console.log("Received Message: " + evt.data);
+        ws.close();
+    };
+    //关闭连接触发
+    ws.onclose = function(evt) {
+        console.log("Connection closed.");
+    };
+    //通信发生错误时触发
+    ws.onerror = function(evt) {
+        console.log("Connection Error.");
+    };
+    //检查浏览器是否支持WebSocket
+    if(typeof WebSocket != 'undefined'){
+        alert("您的浏览器支持 WebSocket!");
+    }else{
+        // 浏览器不支持 WebSocket
+        alert("您的浏览器不支持 WebSocket!");
+    }
+</script>
+ </head>
+ <body>
+  
+ </body>
+</html>

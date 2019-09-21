@@ -115,7 +115,7 @@ public class RedisMQ {
      * 消息队列监听器<br>
      * 监听所有路由器，将消息队列中的消息路由到待消费列表
      */
-    @Scheduled(cron="*/5 * * * * *")
+    //@Scheduled(cron="*/5 * * * * *")
     public void monitor() {
         // 获取消息路由
         int route_size;
