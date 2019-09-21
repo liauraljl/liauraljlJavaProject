@@ -1,2 +1,2 @@
-# liauraljlJavaProjectTest1
-my java project test
+# liauraljlJavaProject
+my java project trial field
