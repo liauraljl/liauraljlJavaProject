@@ -1,9 +1,9 @@
-package test1.IOTest.NettyTest.Echo.Client;
+package com.ljl.example.netty.socket.Client;
 
 import com.alibaba.fastjson.JSON;
+import com.ljl.example.netty.socket.NettyChanelUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import test1.IOTest.NettyTest.Echo.NettyChanelUtil;
 
 public class EchoClientHandler extends SimpleChannelInboundHandler<String> {
 

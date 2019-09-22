@@ -1,21 +1,17 @@
-package test1.IOTest.NettyTest.Echo.Server;
+package com.ljl.example.netty.socket.Server;
 
+import com.ljl.example.netty.socket.NettyChanelUtil;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
-import test1.IOTest.NettyTest.Echo.NettyChanelUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.InetSocketAddress;
-import java.util.concurrent.TimeUnit;
 
 public class EchoServer {
     public static void main(String[] args) throws Exception{

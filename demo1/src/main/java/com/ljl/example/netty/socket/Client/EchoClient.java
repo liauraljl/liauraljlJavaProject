@@ -1,5 +1,6 @@
-package test1.IOTest.NettyTest.Echo.Client;
+package com.ljl.example.netty.socket.Client;
 
+import com.ljl.example.netty.socket.NettyChanelUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -10,7 +11,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
-import test1.IOTest.NettyTest.Echo.NettyChanelUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
