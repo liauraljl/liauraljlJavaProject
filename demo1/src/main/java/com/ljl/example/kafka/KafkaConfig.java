@@ -15,11 +15,6 @@ import org.springframework.kafka.listener.ContainerProperties;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author baiyu
- * @description: KafkaConfig
- * @date: 2019/5/10
- */
 @Configuration
 public class KafkaConfig {
 

@@ -9,11 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
-/**
- * @author baiyu
- * @description: KryoUtils
- * @date: 2019/5/24
- */
 public class KryoUtils {
 
     private  Kryo kryo = new Kryo();

@@ -16,11 +16,6 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author baiyu
- * @description: ProcessKafkaConsumer  消费用户行为日志
- * @date: 2019/5/9
- */
 @Component
 @Slf4j
 @SuppressWarnings("unchecked")

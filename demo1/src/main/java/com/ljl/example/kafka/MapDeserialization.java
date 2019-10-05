@@ -4,11 +4,6 @@ import org.apache.kafka.common.serialization.Deserializer;
 
 import java.util.Map;
 
-/**
- * @author baiyu
- * @description: MapDeserialization
- * @date: 2019/5/24
- */
 public class MapDeserialization implements Deserializer<Map> {
     private KryoUtils kryoUtils;
 
