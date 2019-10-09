@@ -68,7 +68,7 @@ public class EchoServer {
                         Channel channel=NettyChanelUtil.serverCtxs.get(0).channel();
                         if(channel.isActive()){
                             channel.writeAndFlush(content);
-                            System.out.println("isActive=true,服务端发出消息:"+content);
+                            System.out.println("服务端发出消息:"+content);
                         }
                         /*if(channel.isOpen()){
                             channel.writeAndFlush(content);

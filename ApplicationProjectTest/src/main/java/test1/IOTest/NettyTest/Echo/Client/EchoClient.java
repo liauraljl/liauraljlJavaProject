@@ -52,7 +52,7 @@ public class EchoClient {
                         Channel channel = NettyChanelUtil.clientCtxs.get(0).channel();
                         if (channel.isActive()) {
                             channel.writeAndFlush(content);
-                            System.out.println("isActive=true,客户端发出消息:" + content);
+                            System.out.println("客户端发出消息:" + content);
                         }
                         /*if (channel.isOpen()) {
                             channel.writeAndFlush(content);
