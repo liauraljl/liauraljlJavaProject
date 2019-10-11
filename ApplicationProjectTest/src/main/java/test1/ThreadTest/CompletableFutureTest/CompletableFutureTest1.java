@@ -1,6 +1,7 @@
 package test1.ThreadTest.CompletableFutureTest;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.FutureTask;
 
 public class CompletableFutureTest1 {
     public static void main(String[] args) {
