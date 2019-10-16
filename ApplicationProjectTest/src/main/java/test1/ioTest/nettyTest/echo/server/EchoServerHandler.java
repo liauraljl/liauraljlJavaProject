@@ -1,9 +1,9 @@
-package com.ljl.example.netty.socket.Server;
+package test1.ioTest.nettyTest.echo.server;
 
 import com.alibaba.fastjson.JSON;
-import com.ljl.example.netty.socket.NettyChanelUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import test1.ioTest.nettyTest.echo.NettyChanelUtil;
 
 public class EchoServerHandler extends SimpleChannelInboundHandler<String> {
 
@@ -26,6 +26,12 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<String> {
         ctx.writeAndFlush("来自服务端ack:"+msg);
         ctx.fireChannelRead(msg);
     }
+
+   /* @Override
+    public void channelReadComplete(ChannelHandlerContext ctx){
+        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER)
+                .addListener(ChannelFutureListener.CLOSE);
+    }*/
 
     @Override
     public  void exceptionCaught(ChannelHandlerContext ctx,Throwable cause){

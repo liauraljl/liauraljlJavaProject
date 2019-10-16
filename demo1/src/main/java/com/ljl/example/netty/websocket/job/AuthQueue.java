@@ -25,7 +25,7 @@ public class AuthQueue {
         authMap.remove(channelId);
     }
 
-    @PostConstruct
+    //@PostConstruct
     public void authCheck(){
         new Thread(new Runnable() {
             @Override

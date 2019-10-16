@@ -24,4 +24,11 @@ public class SentinelTest {
             sentinelTestServiceImpl.helloWorld();
         }
     }
+
+    @Test
+    public void test2() throws InterruptedException {
+        for (int i=0;i<10000;i++){
+            sentinelTestServiceImpl.test("第"+(i+1)+"次调用");
+        }
+    }
 }

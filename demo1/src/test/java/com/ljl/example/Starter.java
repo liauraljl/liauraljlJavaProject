@@ -11,5 +11,5 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = Demo1Application.class)
 public class Starter {
-    //@Test
+    //@test
 }

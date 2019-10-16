@@ -1,5 +1,6 @@
 package com.ljl.example.netty.websocket.handler;
 
+import com.ljl.example.netty.websocket.enums.ConstantEnum;
 import com.ljl.example.netty.websocket.util.NettyConnectionUtil;
 import com.ljl.example.netty.websocket.util.RedisUtil;
 import io.netty.channel.ChannelHandler.Sharable;
@@ -29,14 +30,14 @@ public class WebsocketHandler extends SelfHandler<TextWebSocketFrame> {
         //处理不同类型的数据片段约定
         //入站消息 AUTH_token    INROOM_wid   INLIVEROOM_livecode    OUTLIVEROOM_livecode   OUTROOM_wid
         //出站消息 FRESH_goods   BARGAINACTIV_json  ROOMBARGAIN_3  ORDER_text
-        /*String[] typeAndContent = msg.text().split("_");
+        String[] typeAndContent = msg.text().split("_");
         log.info(msg.text());
         if(typeAndContent==null || typeAndContent.length!=2){
             ctx.channel().close();
         }else{
             switch (ConstantEnum.of(typeAndContent[0])){
                 case AUTH:
-                    String tokenKey = String.format(RedisKeyConstant.AUTHKEY,typeAndContent[1]);
+                    /*String tokenKey = String.format(RedisKeyConstant.AUTHKEY,typeAndContent[1]);
                     if(tokenKey.equals(redisUtil.getString(tokenKey))){
                     //if(typeAndContent[1].equals("test")){
                          log.info("入站消息：{}",typeAndContent[1]);
@@ -44,7 +45,7 @@ public class WebsocketHandler extends SelfHandler<TextWebSocketFrame> {
                          NettyConnectionUtil.channelUserMap.put(ctx.channel().id().asLongText(),0L);
                     }else{
                         log.info("权限校验失败 key:{},value:{}",tokenKey,redisUtil.getString(tokenKey));
-                    }
+                    }*/
                     break;
                 case INROOM:
                     log.info("进入直播间wid,{}",typeAndContent[1]);
@@ -69,7 +70,7 @@ public class WebsocketHandler extends SelfHandler<TextWebSocketFrame> {
                     System.err.println(typeAndContent[1]);
                     ctx.writeAndFlush(new TextWebSocketFrame("收到消息:"+typeAndContent[1]+",ack!"));
             }
-        }*/
+        }
         ctx.fireChannelRead(msg);
     }
 

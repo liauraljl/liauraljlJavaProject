@@ -16,7 +16,7 @@ import java.util.UUID;
     @Value("${mq.queue.first:1}")
     private String MQ_QUEUE_FIRST;
 
-    //@Test
+    //@test
     public void testMq() {
 
         JSONObject jObj = new JSONObject();
