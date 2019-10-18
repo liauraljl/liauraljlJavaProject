@@ -210,12 +210,24 @@
 			<version>1.6.3</version>
 		</dependency>-->
 
+		<!--sentinel-->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
 			<version>2.1.0.RELEASE</version>
 		</dependency>
 
+		<!--分库分表-->
+		<!--<dependency>
+			<groupId>io.shardingJdbc</groupId>
+			<artifactId>sharding-jdbc-core</artifactId>
+			<version>2.0.3</version>
+		</dependency>-->
+		<dependency>
+			<groupId>com.dangdang</groupId>
+			<artifactId>sharding-jdbc-core</artifactId>
+			<version>1.5.4</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>

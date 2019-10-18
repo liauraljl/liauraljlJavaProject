@@ -3,7 +3,7 @@ package com.ljl.example.redisTest;
 import com.ljl.example.Demo1Application;
 import com.ljl.example.service.redisTest.BitTest;
 import com.ljl.example.service.redisTest.HyperLogLogTest;
-import com.ljl.example.service.redisTest.PipelineTest;
+//import com.ljl.example.service.redisTest.PipelineTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +22,8 @@ public class RedisSetRemoveTest {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Autowired
-    private PipelineTest pipelineTest;
+    /*@Autowired
+    private PipelineTest pipelineTest;*/
 
     @Autowired
     private HyperLogLogTest hyperLogLogTest;
@@ -84,10 +84,10 @@ public class RedisSetRemoveTest {
         redisTemplate.opsForValue().increment(key,-1);
     }
 
-    @Test
+    /*@Test
     public void pipelineTest(){
         pipelineTest.batchSetCompareTest();
-    }
+    }*/
 
     @Test
     public void hyperLogLogTest(){
