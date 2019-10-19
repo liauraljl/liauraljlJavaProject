@@ -56,6 +56,7 @@ public class ShardingJdbcDataSourceConfig {
         //设置默认数据库
         DataSourceRule dataSourceRule = new DataSourceRule(dataSourceMap, database0Config.getDatabaseName());
 
+        //todo 动态表、数据源 一致性hash
         //分表设置，大致思想就是将查询虚拟表Goods根据一定规则映射到真实表中去
         TableRule orderTableRule = TableRule.builder("goods")
                 .actualTables(Arrays.asList("goods_0", "goods_1"))
