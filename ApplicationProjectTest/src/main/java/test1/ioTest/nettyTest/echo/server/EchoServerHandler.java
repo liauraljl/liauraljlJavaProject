@@ -10,21 +10,26 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<String> {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         System.out.println("Server通道激活："+ JSON.toJSONString(ctx));
-        if(!NettyChanelUtil.serverCtxs.contains(ctx)){
-            synchronized (NettyChanelUtil.class){
-                if(!NettyChanelUtil.serverCtxs.contains(ctx)){
-                    NettyChanelUtil.serverCtxs.add(ctx);
-                }
-            }
-        }
         ctx.fireChannelActive();
     }
 
     @Override
     public void channelRead0(ChannelHandlerContext ctx,String msg){
-        System.out.println("server received:"+msg);
-        ctx.writeAndFlush("来自服务端ack:"+msg);
-        ctx.fireChannelRead(msg);
+        if(msg.contains("auth")){
+            String clientId=msg.split("_")[1];
+            if(!NettyChanelUtil.serverCtxs.containsKey(clientId)){
+                synchronized (NettyChanelUtil.serverCtxs){
+                    if(!NettyChanelUtil.serverCtxs.containsKey(clientId)){
+                        NettyChanelUtil.serverCtxs.put(clientId,ctx);
+                        ctx.writeAndFlush(msg);
+                    }
+                }
+            }
+        }else{
+            System.out.println("server received:"+msg);
+            //ctx.writeAndFlush("来自服务端ack:"+msg);
+            ctx.fireChannelRead(msg);
+        }
     }
 
    /* @Override

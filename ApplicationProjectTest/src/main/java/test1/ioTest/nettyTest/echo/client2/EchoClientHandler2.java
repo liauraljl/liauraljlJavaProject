@@ -1,16 +1,16 @@
-package test1.ioTest.nettyTest.echo.client;
+package test1.ioTest.nettyTest.echo.client2;
 
 import com.alibaba.fastjson.JSON;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import test1.ioTest.nettyTest.echo.NettyChanelUtil;
 
-public class EchoClientHandler extends SimpleChannelInboundHandler<String> {
+public class EchoClientHandler2 extends SimpleChannelInboundHandler<String> {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx){
-        System.out.println("Client1通道激活："+ JSON.toJSONString(ctx));
-        ctx.writeAndFlush("auth_client");
+        System.out.println("Client2通道激活："+ JSON.toJSONString(ctx));
+        ctx.writeAndFlush("auth_client2");
         ctx.fireChannelActive();
     }
 
@@ -27,7 +27,7 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<String> {
                 }
             }
         }else{
-            System.out.println("client1 received:"+msg);
+            System.out.println("client2 received:"+msg);
             ctx.fireChannelRead(msg);
         }
     }

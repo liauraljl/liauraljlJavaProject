@@ -1,4 +1,4 @@
-package test1.ioTest.nettyTest.echo.client;
+package test1.ioTest.nettyTest.echo.client2;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -16,7 +16,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class EchoClient {
+public class EchoClient2 {
     public static void main(String[] args) throws Exception{
         new Thread(()->{
             EventLoopGroup group=new NioEventLoopGroup();
@@ -30,7 +30,7 @@ public class EchoClient {
                     public void initChannel(SocketChannel ch) throws Exception{
                         ch.pipeline().addLast("decoder", new StringDecoder());
                         ch.pipeline().addLast("encoder", new StringEncoder());
-                        ch.pipeline().addLast("chat",new EchoClientHandler());
+                        ch.pipeline().addLast("chat",new EchoClientHandler2());
                     }
                 });
                 ChannelFuture f = b.connect("localhost",11087).sync();
@@ -48,11 +48,11 @@ public class EchoClient {
                     //向服务端发送内容
                     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                     String content = reader.readLine();
-                    if (NettyChanelUtil.clientCtxs.containsKey("client")) {
-                        Channel channel = NettyChanelUtil.clientCtxs.get("client").channel();
+                    if (NettyChanelUtil.clientCtxs.containsKey("client2")) {
+                        Channel channel = NettyChanelUtil.clientCtxs.get("client2").channel();
                         if (channel.isActive()) {
                             channel.writeAndFlush(content);
-                            System.out.println("客户端1发出消息:" + content);
+                            System.out.println("客户端2发出消息:" + content);
                         }
                         /*if (channel.isOpen()) {
                             channel.writeAndFlush(content);

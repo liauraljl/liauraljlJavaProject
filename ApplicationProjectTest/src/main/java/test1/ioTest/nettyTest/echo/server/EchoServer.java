@@ -33,7 +33,6 @@ public class EchoServer {
                 b.childHandler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
-                        ch.pipeline().addLast(new EchoServerHandler());
                         //编码通道处理
                         ch.pipeline().addLast("decode", new StringDecoder());
                         //转码通道处理
@@ -49,6 +48,7 @@ public class EchoServer {
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
+                //优雅关闭
                 workerGroup.shutdownGracefully();
                 bossGroup.shutdownGracefully();
             }
@@ -60,16 +60,28 @@ public class EchoServer {
                     //向客户端发送内容
                     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                     String content = reader.readLine();
-                    if(NettyChanelUtil.serverCtxs.size()>0){
-                        Channel channel=NettyChanelUtil.serverCtxs.get(0).channel();
-                        if(channel.isActive()){
-                            channel.writeAndFlush(content);
-                            System.out.println("服务端发出消息:"+content);
+                    if(content.contains("_")){
+                        String clientId=content.split("_")[0];
+                        if(NettyChanelUtil.serverCtxs.containsKey(clientId)){
+                            Channel channel=NettyChanelUtil.serverCtxs.get(clientId).channel();
+                            if(channel.isActive()){
+                                channel.writeAndFlush(content.split("_")[1]);
+                            }
                         }
+                    }else{
+                        if(NettyChanelUtil.serverCtxs.size()>0){
+                            for(ChannelHandlerContext ctx:NettyChanelUtil.serverCtxs.values()){
+                                Channel channel=ctx.channel();
+                                if(channel.isActive()){
+                                    channel.writeAndFlush(content);
+                                    System.out.println("服务端发出消息:"+content);
+                                }
                         /*if(channel.isOpen()){
                             channel.writeAndFlush(content);
                             System.out.println("isOpen服务端发出消息:"+content);
                         }*/
+                            }
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
