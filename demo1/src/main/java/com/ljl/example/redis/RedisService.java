@@ -403,4 +403,20 @@ public class RedisService {
             }
         });
     }
+
+    /**
+     * 执行Lua 脚本
+     *
+     * @param lua          脚本路径
+     * @param tClass       返回的数据对象
+     * @param keys         脚本内需要的key值
+     * @param values       脚本内需要的其他参数
+     * @return
+     */
+    public <T> T redisLuaScript(String lua,Class<T> tClass, List<String> keys,Object ...values) {
+        DefaultRedisScript<T> redisScript = new DefaultRedisScript<T>();
+        redisScript.setResultType(tClass);
+        redisScript.setScriptSource(new ResourceScriptSource(new ClassPathResource(lua)));
+        return (T) redisTemplate.execute(redisScript, keys, values);
+    }
 }

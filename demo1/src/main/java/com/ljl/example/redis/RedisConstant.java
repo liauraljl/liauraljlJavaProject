@@ -41,4 +41,9 @@ public class RedisConstant {
      * bit 测试  key
      */
     public static final String TEST_BIT_KEY1="example:test:bit:%s";
+
+    /**
+     * zset 测试 key
+     */
+    public static final String TEST_ZSET_KEY1="example:test:zset:%s";
 }
