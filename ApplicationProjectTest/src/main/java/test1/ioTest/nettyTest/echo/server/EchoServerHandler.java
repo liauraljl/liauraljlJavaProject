@@ -21,7 +21,6 @@ public class EchoServerHandler extends SimpleChannelInboundHandler<String> {
                 synchronized (NettyChanelUtil.serverCtxs){
                     if(!NettyChanelUtil.serverCtxs.containsKey(clientId)){
                         NettyChanelUtil.serverCtxs.put(clientId,ctx);
-                        ctx.writeAndFlush(msg);
                     }
                 }
             }

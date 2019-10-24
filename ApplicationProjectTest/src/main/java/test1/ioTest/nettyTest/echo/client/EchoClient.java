@@ -48,8 +48,8 @@ public class EchoClient {
                     //向服务端发送内容
                     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                     String content = reader.readLine();
-                    if (NettyChanelUtil.clientCtxs.containsKey("client")) {
-                        Channel channel = NettyChanelUtil.clientCtxs.get("client").channel();
+                    if (NettyChanelUtil.clientCtxs.containsKey(EchoClientHandler.clientId)) {
+                        Channel channel = NettyChanelUtil.clientCtxs.get(EchoClientHandler.clientId).channel();
                         if (channel.isActive()) {
                             channel.writeAndFlush(content);
                             System.out.println("客户端1发出消息:" + content);
