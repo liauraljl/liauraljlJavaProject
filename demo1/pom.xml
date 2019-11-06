@@ -228,6 +228,13 @@
 			<artifactId>sharding-jdbc-core</artifactId>
 			<version>1.5.4</version>
 		</dependency>
+
+		<!-- hystrix -->
+		<dependency>
+			<groupId>com.netflix.hystrix</groupId>
+			<artifactId>hystrix-core</artifactId>
+			<version>1.5.12</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>

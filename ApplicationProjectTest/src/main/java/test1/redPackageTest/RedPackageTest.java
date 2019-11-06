@@ -35,13 +35,16 @@ public class RedPackageTest {
         for (int i = 0; i < 50; i++) {
             RedPackage moneyPackage = new RedPackage();
             moneyPackage.remainMoney = BigDecimal.valueOf(100);
-            moneyPackage.remainSize = 5;
+            moneyPackage.remainSize = 30;
 
+            BigDecimal sum=BigDecimal.valueOf(0);
             while (moneyPackage.remainSize != 0) {
-                System.out.print(getRandomMoney(moneyPackage)  + "   ");
+                BigDecimal dive=getRandomMoney(moneyPackage);
+                sum=sum.add(dive);
+                System.out.print(dive  + "   ");
             }
 
-            System.out.println();
+            System.out.println("此批总和:"+sum);
         }
     }
 
