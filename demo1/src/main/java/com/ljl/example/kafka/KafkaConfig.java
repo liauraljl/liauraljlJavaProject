@@ -1,6 +1,7 @@
 package com.ljl.example.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.internals.ConsumerInterceptors;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerInterceptor;
 import org.apache.kafka.clients.producer.internals.DefaultPartitioner;
@@ -108,6 +109,8 @@ public class KafkaConfig {
         configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,StringDeserializer.class);//消息体 String Map Entity
         //configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG,MapDeserialization.class);
+        //消费者拦截器
+        configs.put(ConsumerConfig.INTERCEPTOR_CLASSES_CONFIG, ConsumerInterceptors.class);
         return new DefaultKafkaConsumerFactory<Object, Object>(configs);
     }
 
