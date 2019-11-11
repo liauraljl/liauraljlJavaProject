@@ -45,7 +45,7 @@ public class Test3ServiceImpl implements Test3Service{
     private ProcessMapper processMapper;
 
     public void test3(){
-        test2Service.test2();
+        //test2Service.test2();
     }
 
     /**

@@ -41,6 +41,20 @@ public class Demo1ApplicationTests {
 	}
 
 	@Test
+	public void test2(){
+		for(int i=0;i<100000;i++){
+			try{
+				String result=test2Service.test2();
+				if(!result.equals("success"))
+					System.err.println(result);
+			}catch (Exception e){
+
+			}
+		}
+		System.out.println("执行完毕，没有降级！！！！！！！！！！！！");
+	}
+
+	@Test
 	public void test5Test(){
 		test3Service.test5();
 	}

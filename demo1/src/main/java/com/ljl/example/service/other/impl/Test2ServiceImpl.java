@@ -8,7 +8,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class Test2ServiceImpl implements Test2Service {
-    public void test2(){
-        System.out.print("sss");
+    public String test2() throws Exception {
+        long time=System.currentTimeMillis();
+        if(time/1000000000000L==1){
+            //System.err.println("时间戳:"+time);
+            throw new Exception();
+        }
+        return "success";
     }
 }
