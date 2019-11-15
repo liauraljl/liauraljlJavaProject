@@ -6,8 +6,8 @@ import com.ljl.example.Demo1Application;
 import com.ljl.example.model.Process;
 import com.ljl.example.redis.RedisConstant;
 import com.ljl.example.redis.RedisService;
+import com.ljl.example.service.componentTest.impl.Test3ServiceImpl;
 import com.ljl.example.service.other.Test2Service;
-import com.ljl.example.service.other.impl.Test3ServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,22 +31,24 @@ public class Demo1ApplicationTests {
     private RedisService redisService;
 
 	@Autowired
-	private Test2Service test2Service;
+	private Test2Service s222222222111111;
 
+	/*@Resource
+	private Test3ServiceImpl mytest3ServiceImpl;*/
 
-	@Resource
-	private Test3ServiceImpl test3ServiceImpl;
+	@Autowired
+	private Test3ServiceImpl mytest3ServiceImpl;
 
 	@Test
 	public void test3Test() {
-		test3ServiceImpl.test3();
+		mytest3ServiceImpl.test3();
 	}
 
 	@Test
 	public void test2(){
 		for(int i=0;i<100000;i++){
 			try{
-				String result=test2Service.test2();
+				String result=s222222222111111.test2();
 				if(!result.equals("success"))
 					System.err.println(result);
 			}catch (Exception e){
@@ -56,19 +58,19 @@ public class Demo1ApplicationTests {
 		System.out.println("执行完毕，没有降级！！！！！！！！！！！！");
 	}
 
-	@Test
+	/*@Test
 	public void test5Test(){
-		test3ServiceImpl.test5();
+		mytest3ServiceImpl.test5();
 	}
 
 	@Test
 	public void test4test(){
-		test3ServiceImpl.test4();
+		mytest3ServiceImpl.test4();
 	}
 
 	@Test
 	public void redisLockTest(){
-		test3ServiceImpl.redisLockTest();
+		mytest3ServiceImpl.redisLockTest();
 	}
 
 	@Test
@@ -78,18 +80,18 @@ public class Demo1ApplicationTests {
 
 	@Test
 	public void processDbTest(){
-		test3ServiceImpl.dbTest();
+		mytest3ServiceImpl.dbTest();
 	}
 
 	@Test
 	public void readCacheTest(){
-		Process process=test3ServiceImpl.readCache();
+		Process process=mytest3ServiceImpl.readCache();
 		System.out.println(JSON.toJSONString(process));
 	}
 
 	@Test
 	public void updateProcessTest(){
-		test3ServiceImpl.updateProcessTest();
+		mytest3ServiceImpl.updateProcessTest();
 	}
 
 	@Test
@@ -107,5 +109,5 @@ public class Demo1ApplicationTests {
         String value="1";
         redisService.redisLuaScript("lua/removeFromRedisDelayTest.lua",List.class,keys,value);
         System.out.println(JSONArray.toJSONString(""));
-    }
+    }*/
 }
