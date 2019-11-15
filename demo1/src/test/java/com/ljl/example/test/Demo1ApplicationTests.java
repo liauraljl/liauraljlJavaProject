@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,12 +33,13 @@ public class Demo1ApplicationTests {
 	@Autowired
 	private Test2Service test2Service;
 
-	@Autowired
-	private Test3ServiceImpl test3Service;
+
+	@Resource
+	private Test3ServiceImpl test3ServiceImpl;
 
 	@Test
 	public void test3Test() {
-		test3Service.test3();
+		test3ServiceImpl.test3();
 	}
 
 	@Test
@@ -56,17 +58,17 @@ public class Demo1ApplicationTests {
 
 	@Test
 	public void test5Test(){
-		test3Service.test5();
+		test3ServiceImpl.test5();
 	}
 
 	@Test
 	public void test4test(){
-		test3Service.test4();
+		test3ServiceImpl.test4();
 	}
 
 	@Test
 	public void redisLockTest(){
-		test3Service.redisLockTest();
+		test3ServiceImpl.redisLockTest();
 	}
 
 	@Test
@@ -76,18 +78,18 @@ public class Demo1ApplicationTests {
 
 	@Test
 	public void processDbTest(){
-		test3Service.dbTest();
+		test3ServiceImpl.dbTest();
 	}
 
 	@Test
 	public void readCacheTest(){
-		Process process=test3Service.readCache();
+		Process process=test3ServiceImpl.readCache();
 		System.out.println(JSON.toJSONString(process));
 	}
 
 	@Test
 	public void updateProcessTest(){
-		test3Service.updateProcessTest();
+		test3ServiceImpl.updateProcessTest();
 	}
 
 	@Test

@@ -45,6 +45,7 @@ public class Test3ServiceImpl implements Test3Service{
     private ProcessMapper processMapper;
 
     public void test3(){
+        System.err.println("annotation test!!!!!!!");
         //test2Service.test2();
     }
 
