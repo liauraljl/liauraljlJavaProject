@@ -8,7 +8,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.*;
 
 @Slf4j
@@ -41,6 +43,22 @@ public class JobTest {
             e.printStackTrace();
         }
         System.out.println("job job executor end! result="+result);
+    }
+
+    @Scheduled(cron = "*/20 * * * * ?")
+    public void test(){
+        System.out.println("job start!");
+        //byte[] byy=new byte[1024*1024*90];
+        List<TT> list=new ArrayList<>();
+        for(;;){
+            list.add(new TT());
+        }
+        //System.out.println("job end!");
+    }
+
+    private class TT{
+        String aByte="ddddddddddddddd";
+        //byte[] bb=new byte[1024*1024*10];
     }
 
 }
