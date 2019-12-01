@@ -1,4 +1,4 @@
-package test1.gcTest;
+package test1.jvmTest.gcTest;
 
 public class Test1 {
     public static void main(String[] args) {
