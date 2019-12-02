@@ -13,6 +13,10 @@ public class Test1 {
         }
     }
 
+    /**
+     * gc test 堆内存溢出测试
+     * @throws InterruptedException
+     */
     private void test1() throws InterruptedException {
         System.out.println("1...");
         Thread.sleep(30000);
