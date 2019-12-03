@@ -12,7 +12,8 @@ public class StackTest {
     }
 
     private void start(){
-        test1();
+        //test1();
+        test2();
     }
 
     /**
@@ -42,5 +43,12 @@ public class StackTest {
     private void method13(){
         test1Count1++;
         method12();
+    }
+
+    private void test2(){
+        while (true){
+            long a=2;
+            double b=2.99;
+        }
     }
 }
