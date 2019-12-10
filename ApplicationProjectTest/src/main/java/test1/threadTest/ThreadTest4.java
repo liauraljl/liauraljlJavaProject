@@ -36,6 +36,7 @@ public class ThreadTest4 {
         synchronized (t4){
             t4.notify();//wait notify notifyAll必须在同步代码块内执行
         }
+        //new Thread(.set)
     }
 
     private void test1a() throws InterruptedException {
