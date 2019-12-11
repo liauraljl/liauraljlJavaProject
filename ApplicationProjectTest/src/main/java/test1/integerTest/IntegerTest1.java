@@ -5,7 +5,8 @@ package test1.integerTest;
  */
 public class IntegerTest1 {
     public static void main(String[] args){
-        test1();
+        //test1();
+        test2();
     }
 
     public static void test1(){
@@ -16,5 +17,13 @@ public class IntegerTest1 {
         if(a.equals(482)){
             int jj=0;
         }
+    }
+
+    private static void test2(){
+        int a=1;
+        while (a>0){
+            a++;
+        }
+        System.out.println(a);
     }
 }

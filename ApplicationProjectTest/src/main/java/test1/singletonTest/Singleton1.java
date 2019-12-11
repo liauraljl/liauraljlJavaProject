@@ -1,7 +1,7 @@
 package test1.singletonTest;
 
 /**
- * 单例 懒汉模式
+ * 单例 懒汉模式(不可用，线程不安全)
  * Created by liaura_ljl on 2019/7/29.
  */
 public class Singleton1 {
