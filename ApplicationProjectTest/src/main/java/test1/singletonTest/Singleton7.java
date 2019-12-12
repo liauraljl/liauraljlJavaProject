@@ -1,7 +1,7 @@
 package test1.singletonTest;
 
 /**
- * 单例 枚举
+ * 单例 枚举(最好，防止反序列化破坏单例)
  * Created by liaura_ljl on 2019/7/29.
  */
 public class Singleton7 {

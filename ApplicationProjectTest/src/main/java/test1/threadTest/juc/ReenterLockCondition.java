@@ -14,6 +14,7 @@ public class ReenterLockCondition implements Runnable {
     public void run() {
         try{
             lock.lock();
+            System.out.println("开始等待吧");
             condition.await();
             System.out.println("Thread is going on");
         }catch (InterruptedException e){
@@ -30,7 +31,9 @@ public class ReenterLockCondition implements Runnable {
         Thread.sleep(2000);
         //通知线程t1继续执行
         lock.lock();
+        System.out.println("我来唤醒你");
         condition.signal();
+        //condition.signalAll();
         lock.unlock();
     }
 }
