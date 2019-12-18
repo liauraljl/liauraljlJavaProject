@@ -20,7 +20,7 @@ public class EchoServer {
             // 一个是用于处理服务器端接收客户端连接的
             // 一个是进行网络通信的（网络读写的）
             EventLoopGroup bossGroup = new NioEventLoopGroup();
-            EventLoopGroup workerGroup = new NioEventLoopGroup();
+            EventLoopGroup workerGroup = new NioEventLoopGroup(0);
             try {
                 // 2 创建辅助工具类，用于服务器通道的一系列配置
                 ServerBootstrap b = new ServerBootstrap();
