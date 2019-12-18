@@ -5,6 +5,19 @@ import java.util.regex.Pattern;
 
 public class PatternTest {
     public static void main(String[] args) {
+        int count = 0;
+        String regEx = "[\\u4e00-\\u9fa5]";
+        String str = "AQWASD我们都是好孩子AAAA11222 ";
+        char[] ch=str.trim().toCharArray();
+        Pattern p = Pattern.compile(regEx);
+        Matcher m = p.matcher(str);
+        while (m.find()) {
+            for (int i = 0; i <= m.groupCount(); i++) {
+                count = count + 1;
+            }
+        }
+        System.out.println("共有 " + count + "个 ");
+
         System.out.println(checkPhone("122121"));
         System.out.println(checkPhone("13412121212"));
         System.out.println(checkPhone("fdsf"));
