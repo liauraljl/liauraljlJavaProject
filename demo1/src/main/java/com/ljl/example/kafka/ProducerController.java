@@ -28,7 +28,7 @@ public class ProducerController {
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET, produces = {"application/json"})
     public Response sendKafka() {
-        return new Response(ErrorCode.SUCCESS, "OK");
+        return new Response(ErrorCode.SUCCESS.getErrorCode(), "OK");
     }
 
 
@@ -41,10 +41,10 @@ public class ProducerController {
                 kafkaProducer.send(topic, "key", message);
             //}
             log.info("发送kafka成功.");
-            return new Response(ErrorCode.SUCCESS, "发送kafka成功");
+            return new Response(ErrorCode.SUCCESS.getErrorCode(), "发送kafka成功");
         } catch (Exception e) {
             log.error("发送kafka失败", e);
-            return new Response(ErrorCode.EXCEPTION, "发送kafka失败");
+            return new Response(ErrorCode.FAIL.getErrorCode(), "发送kafka失败");
         }
     }
 

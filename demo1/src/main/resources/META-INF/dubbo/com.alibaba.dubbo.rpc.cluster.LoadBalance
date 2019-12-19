@@ -1,6 +1,6 @@
 allExecute=com.ljl.example.loadBalance.AllExecuteLoadBalance
 
-random=com.ljl.example.loadBalance.RandomLoadBalance
+myRandom=com.ljl.example.loadBalance.RandomLoadBalance
 roundrobin=com.ljl.example.loadBalance.RoundRobinLoadBalance
 leastactive=com.ljl.example.loadBalance.LeastActiveLoadBalance
 consistenthash=com.ljl.example.loadBalance.ConsistentHashLoadBalance

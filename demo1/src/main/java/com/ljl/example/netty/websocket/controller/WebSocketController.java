@@ -23,6 +23,6 @@ public class WebSocketController {
     @PostMapping("sendMsg")
     public Response hello(Long userId,String msg) {
         sendMessageService.sendMsg(userId,msg);
-        return new Response(ErrorCode.SUCCESS, "OK");
+        return new Response(ErrorCode.SUCCESS.getErrorCode(), "OK");
     }
 }
