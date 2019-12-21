@@ -1,4 +1,4 @@
-package test1.singletonTest;
+package test1.designPattern.singletonTest;
 
 /**
  * 单例 枚举(最好，防止反序列化破坏单例)

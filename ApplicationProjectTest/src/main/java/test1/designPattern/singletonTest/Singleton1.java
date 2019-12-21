@@ -1,4 +1,4 @@
-package test1.singletonTest;
+package test1.designPattern.singletonTest;
 
 /**
  * 单例 懒汉模式(不可用，线程不安全)

@@ -1,4 +1,4 @@
-package test1.singletonTest;
+package test1.designPattern.singletonTest;
 
 /**
  * 单例 饿汉模式
