@@ -17,6 +17,6 @@ public class TestController {
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET, produces = {"application/json"})
     public Response hello() {
-        return new Response(ErrorCode.SUCCESS, "OK");
+        return new Response(ErrorCode.SUCCESS.getErrorCode(), "OK");
     }
 }
