@@ -15,12 +15,7 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         //1、创建ringbuffer
         RingBuffer<Order> ringBuffer = RingBuffer.create(ProducerType.MULTI,
-                new EventFactory<Order>() {
-                    @Override
-                    public Order newInstance() {
-                        return new Order();
-                    }
-                },
+                () -> new Order(),
                 1024 * 1024,
                 new YieldingWaitStrategy());
 
@@ -28,7 +23,7 @@ public class Main {
         SequenceBarrier sequenceBarrier = ringBuffer.newBarrier();
 
         //3、创建多个消费者数组
-        Consumer[] consumers = new Consumer[10];
+        Consumer[] consumers = new Consumer[20];
         for (int i = 0; i < consumers.length; i++) {
             consumers[i] = new Consumer("C" + i);
         }
@@ -64,10 +59,14 @@ public class Main {
         System.out.println("-----------线程创建完毕，开始生产数据-------------");
         latch.countDown();
 
-        Thread.sleep(10000);
+        Thread.sleep(6000);
 
-        System.out.println("任务总数："+consumers[0].getCount());
-        System.out.println("任务总数："+consumers[1].getCount());
-        System.out.println("任务总数："+consumers[2].getCount());
+        int sum = 0;
+        for (Consumer consumer : consumers) {
+            System.out.println(consumer.getConsumerId() + ":任务总数：" + consumer.getCount());
+            sum += consumer.getCount();
+        }
+        System.out.println("任务总数：" + sum);
+        workerPool.halt();
     }
 }

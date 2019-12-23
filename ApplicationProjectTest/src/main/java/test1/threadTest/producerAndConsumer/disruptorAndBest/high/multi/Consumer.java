@@ -1,6 +1,7 @@
 package test1.threadTest.producerAndConsumer.disruptorAndBest.high.multi;
 
 import com.lmax.disruptor.WorkHandler;
+import lombok.Getter;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -9,9 +10,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by liaura_ljl on 2019/10/20.
  */
 public class Consumer implements WorkHandler<Order> {
+
+    @Getter
     private String consumerId;
 
-    private static AtomicInteger count=new AtomicInteger(0);
+    private AtomicInteger count=new AtomicInteger(0);
 
     private Random random=new Random();
 

@@ -7,11 +7,12 @@ import com.lmax.disruptor.dsl.ProducerType;
 
 import java.nio.ByteBuffer;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        Executor executor= Executors.newCachedThreadPool();
+        ExecutorService executor= Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
         PCDataFactory pcDataFactory=new PCDataFactory();
         int bufferSize=1024;
         Disruptor<PCData> disruptor=new Disruptor<PCData>(pcDataFactory,bufferSize,executor, ProducerType.MULTI,new BlockingWaitStrategy());
@@ -21,11 +22,14 @@ public class Main {
         RingBuffer<PCData> ringBuffer=disruptor.getRingBuffer();
         Producer producer=new Producer(ringBuffer);
         ByteBuffer bb=ByteBuffer.allocate(8);
-        for(long l=0;true;l++){
+        for(long l=0;l<100;l++){
             bb.putLong(0,l);
             producer.pushData(bb);
-            Thread.sleep(100);
+            //Thread.sleep(100);
             System.out.println("add data "+l);
         }
+        disruptor.shutdown();
+        executor.shutdown();
+
     }
 }

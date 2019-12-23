@@ -39,19 +39,16 @@ public class Demo1 {
         executors.submit(transProcessor);
         //如果存大多个消费者 那重复执行上面3行代码 把TradeTransactionInDBHandler换成其它消费者类
 
-        Future<?> future=executors.submit(new Callable<Void>() {
-            @Override
-            public Void call() throws Exception {
-                long seq;
-                for(int i=0;i<1000;i++){
-                    seq=ringBuffer.next();//占个坑 --ringBuffer一个可用区块
+        Future<?> future=executors.submit((Callable<Void>) () -> {
+            long seq;
+            for (int i = 0; i < 1000; i++) {
+                seq = ringBuffer.next();//占个坑 --ringBuffer一个可用区块
 
-                    ringBuffer.get(seq).setPrice(Math.random()*9999);//给这个区块放入 数据  如果此处不理解，想想RingBuffer的结构图
+                ringBuffer.get(seq).setPrice(Math.random() * 9999);//给这个区块放入 数据  如果此处不理解，想想RingBuffer的结构图
 
-                    ringBuffer.publish(seq);//发布这个区块的数据使handler(consumer)可见
-                }
-                return null;
+                ringBuffer.publish(seq);//发布这个区块的数据使handler(consumer)可见
             }
+            return null;
         });
         future.get();//等待生产者结束
         Thread.sleep(1000);//等上1秒，等消费都处理完成
