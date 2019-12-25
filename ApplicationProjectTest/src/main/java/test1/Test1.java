@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class Test1 {
     public static void main(String args[]) {
+        int a=1<<30;
+        System.out.println(a);
         new Test1().test1();
         ArrayList<Integer> arrayList = new ArrayList<>();
 

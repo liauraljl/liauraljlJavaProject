@@ -5,7 +5,11 @@ import java.util.concurrent.locks.LockSupport;
 
 public class LockSupportTest {
     public static void main(String[] args) throws InterruptedException {
+<<<<<<< HEAD
         CountDownLatch latch=new CountDownLatch(1);
+=======
+        CountDownLatch countDownLatch=new CountDownLatch(1);
+>>>>>>> 3b28c3fa90aa9ee0e2421bd0b545f0b45cc42f3a
         Thread parkThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -13,7 +17,11 @@ public class LockSupportTest {
 
                 //等待获取许可
                 LockSupport.park();
+<<<<<<< HEAD
 
+=======
+                countDownLatch.countDown();
+>>>>>>> 3b28c3fa90aa9ee0e2421bd0b545f0b45cc42f3a
                 //输出thread over.true
                 System.out.println("thread over." + Thread.currentThread().isInterrupted());
 
@@ -23,7 +31,11 @@ public class LockSupportTest {
 
         Thread.sleep(2000);
         // 中断线程
+<<<<<<< HEAD
         latch.await();
+=======
+        countDownLatch.await();
+>>>>>>> 3b28c3fa90aa9ee0e2421bd0b545f0b45cc42f3a
         parkThread.interrupt();
 
         System.out.println("main over");
