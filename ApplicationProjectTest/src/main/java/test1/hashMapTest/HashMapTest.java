@@ -25,5 +25,9 @@ public class HashMapTest {
         map3.put("s1","v1");
         map3.put("s2","v2");
         System.out.println("");
+        int a1=1;
+
+        int A=2;
+
     }
 }
