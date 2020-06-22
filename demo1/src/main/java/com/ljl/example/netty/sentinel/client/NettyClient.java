@@ -1,12 +1,16 @@
 package com.ljl.example.netty.sentinel.client;
 
+import com.alibaba.csp.sentinel.cluster.ClusterConstants;
 import com.alibaba.csp.sentinel.cluster.client.ClientConstants;
 import com.alibaba.csp.sentinel.cluster.client.codec.netty.NettyRequestEncoder;
 import com.alibaba.csp.sentinel.cluster.client.codec.netty.NettyResponseDecoder;
 import com.alibaba.csp.sentinel.cluster.client.config.ClusterClientConfigManager;
+import com.alibaba.csp.sentinel.cluster.client.init.DefaultClusterClientInitFunc;
 import com.alibaba.csp.sentinel.cluster.request.ClusterRequest;
+import com.alibaba.csp.sentinel.cluster.request.data.FlowRequestData;
 import com.alibaba.csp.sentinel.cluster.response.ClusterResponse;
 import com.alibaba.csp.sentinel.concurrent.NamedThreadFactory;
+import com.alibaba.fastjson.JSON;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.*;
@@ -51,8 +55,7 @@ public class NettyClient {
             new NamedThreadFactory("sentinel-cluster-transport-client-scheduler"));
 
 
-
-
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(32);
 
 
     public static void main(String[] args) throws Exception{
@@ -103,25 +106,70 @@ public class NettyClient {
             }
         });
 
+        try {
+            new DefaultClusterClientInitFunc().init();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         while (true) {
             try {
                 try {
                     countDownLatch.await();
+                    for(int i=0;i<3;i++){
+                        executorService.submit(testThread);
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
                 //向服务端发送内容
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                String content = reader.readLine();
+//                /*BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+//                String content = reader.readLine();
+//                int xid = getCurrentId();
+//                try {
+//                    startTimes.put(xid,System.currentTimeMillis());
+//                    //Msg msg=new Msg(xid,content);
+//                    FlowRequestData data = new FlowRequestData().setCount(1)
+//                            .setFlowId(100).setPriority(false);
+//                    ClusterRequest<FlowRequestData> request = new ClusterRequest<>(ClusterConstants.MSG_TYPE_FLOW, data);
+//                    request.setId(xid);
+//
+//                    channel.writeAndFlush(request);
+//
+//                    ChannelPromise promise = channel.newPromise();
+//                    TokenClientPromiseHolder.putPromise(xid, promise);
+//
+//
+//                    if (!promise.await(ClusterClientConfigManager.getRequestTimeout())) {
+//                        System.err.println("request time out !!!!");
+//                    }
+//                    AbstractMap.SimpleEntry<ChannelPromise, ClusterResponse> entry = TokenClientPromiseHolder.getEntry(xid);
+//                    System.out.println("client耗时："+(System.currentTimeMillis()-startTimes.get(entry.getValue().getId())));
+//                    System.out.println("client返回："+ JSON.toJSONString(entry));
+//
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }*/
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private Runnable testThread=new Runnable() {
+        @Override
+        public void run() {
+            while (true){
                 int xid = getCurrentId();
                 try {
-                    startTimes.put(xid,System.currentTimeMillis());
+                    startTimes.put(xid, System.currentTimeMillis());
                     //Msg msg=new Msg(xid,content);
-                    ClusterRequest<String> clusterRequest=new ClusterRequest();
-                    clusterRequest.setId(xid);
-                    clusterRequest.setType(1);
-                    clusterRequest.setData("msg:"+xid);
-                    channel.writeAndFlush(clusterRequest);
+                    FlowRequestData data = new FlowRequestData().setCount(1)
+                            .setFlowId(100).setPriority(false);
+                    ClusterRequest<FlowRequestData> request = new ClusterRequest<>(ClusterConstants.MSG_TYPE_FLOW, data);
+                    request.setId(xid);
+
+                    channel.writeAndFlush(request);
 
                     ChannelPromise promise = channel.newPromise();
                     TokenClientPromiseHolder.putPromise(xid, promise);
@@ -131,40 +179,15 @@ public class NettyClient {
                         System.err.println("request time out !!!!");
                     }
                     AbstractMap.SimpleEntry<ChannelPromise, ClusterResponse> entry = TokenClientPromiseHolder.getEntry(xid);
-                    //System.out.println("client耗时："+(System.currentTimeMillis()-startTimes.get(entry.getValue().getMsgId())));
-                    //System.out.println("client返回："+JSON.toJSONString(entry));
+                    System.out.println("client耗时：" + (System.currentTimeMillis() - startTimes.get(entry.getValue().getId())));
+                }catch (Exception e){
 
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
-    }
+    };
 
-    /*private Runnable disconnectCallback = new Runnable() {
-        @Override
-        public void run() {
-            if (!shouldRetry.get()) {
-                return;
-            }
-            SCHEDULER.schedule(new Runnable() {
-                @Override
-                public void run() {
-                    if (shouldRetry.get()) {
-                        RecordLog.info("[NettyTransportClient] Reconnecting to server <" + host + ":" + port + ">");
-                        try {
-                            startInternal();
-                        } catch (Exception e) {
-                            RecordLog.warn("[NettyTransportClient] Failed to reconnect to server", e);
-                        }
-                    }
-                }
-            }, RECONNECT_DELAY_MS * (failConnectedTime.get() + 1), TimeUnit.MILLISECONDS);
-            cleanUp();
-        }
-    };*/
+
 
     private int getCurrentId() {
         if (idGenerator.get() > MAX_ID) {

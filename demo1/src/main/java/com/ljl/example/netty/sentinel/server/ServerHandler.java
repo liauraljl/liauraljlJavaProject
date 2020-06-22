@@ -3,6 +3,8 @@ package com.ljl.example.netty.sentinel.server;
 import com.alibaba.csp.sentinel.cluster.ClusterConstants;
 import com.alibaba.csp.sentinel.cluster.request.ClusterRequest;
 import com.alibaba.csp.sentinel.cluster.response.ClusterResponse;
+import com.alibaba.csp.sentinel.cluster.response.data.FlowTokenResponseData;
+import com.alibaba.csp.sentinel.cluster.server.connection.ConnectionManager;
 import com.alibaba.csp.sentinel.cluster.server.connection.ConnectionPool;
 import com.alibaba.csp.sentinel.cluster.server.processor.RequestProcessor;
 import com.alibaba.csp.sentinel.cluster.server.processor.RequestProcessorProvider;
@@ -38,14 +40,19 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     }
 
     @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        String remoteAddress = getRemoteAddress(ctx);
+        globalConnectionPool.remove(ctx.channel());
+        ConnectionManager.removeConnection(remoteAddress);
+    }
+
+    @Override
     public void channelRead(ChannelHandlerContext ctx,Object msg){
-        System.out.println("server received:"+msg);
+        //System.out.println("server received:"+msg);
         globalConnectionPool.refreshLastReadTime(ctx.channel());
-        System.out.println(msg);
-        ctx.writeAndFlush(msg);
 
         if (msg instanceof ClusterRequest) {
-            ClusterRequest<String> request = (ClusterRequest)msg;
+            ClusterRequest request = (ClusterRequest)msg;
 
             // Client ping with its namespace, add to connection manager.
             if (request.getType() == ClusterConstants.MSG_TYPE_PING) {
@@ -53,9 +60,12 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 return;
             }
 
-            ClusterResponse<String> response = new ClusterResponse<>();
+            FlowTokenResponseData data=new FlowTokenResponseData().setRemainingCount(19).setWaitInMs(10);
+            ClusterResponse<FlowTokenResponseData> response = new ClusterResponse<>();
             response.setId(request.getId());
-            response.setData(request.getData());
+            response.setType(1);
+            response.setStatus(1);
+            response.setData(data);
             ctx.writeAndFlush(response);
         }
     }

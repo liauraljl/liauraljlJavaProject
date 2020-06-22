@@ -3,6 +3,7 @@ package com.ljl.example.netty.sentinel.server;
 import com.alibaba.csp.sentinel.cluster.server.codec.netty.NettyRequestDecoder;
 import com.alibaba.csp.sentinel.cluster.server.codec.netty.NettyResponseEncoder;
 import com.alibaba.csp.sentinel.cluster.server.connection.ConnectionPool;
+import com.alibaba.csp.sentinel.cluster.server.init.DefaultClusterServerInitFunc;
 import com.ljl.example.netty.socket.Server.EchoServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.PooledByteBufAllocator;
@@ -28,6 +29,8 @@ public class NettyServer {
 
     public static void main(String[] args) throws Exception{
         ExecutorService executorService= Executors.newFixedThreadPool(2);
+
+        new DefaultClusterServerInitFunc().init();
 
         executorService.execute(()->{
             // 1 创建两个线程组

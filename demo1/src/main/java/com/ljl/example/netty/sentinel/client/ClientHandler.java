@@ -1,5 +1,7 @@
 package com.ljl.example.netty.sentinel.client;
 import com.alibaba.csp.sentinel.cluster.ClusterConstants;
+import com.alibaba.csp.sentinel.cluster.registry.ConfigSupplierRegistry;
+import com.alibaba.csp.sentinel.cluster.request.ClusterRequest;
 import com.alibaba.csp.sentinel.cluster.response.ClusterResponse;
 import com.alibaba.fastjson.JSON;
 import io.netty.channel.ChannelHandlerContext;
@@ -25,8 +27,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelActive(ChannelHandlerContext ctx){
         System.out.println("Client通道激活："+ JSON.toJSONString( ctx));
-        ctx.writeAndFlush("通知服务端：客户端收到连接！");
-        //ctx.fireChannelActive();
+        fireClientPing(ctx);
+
     }
 
     @Override
@@ -51,5 +53,13 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     public void exceptionCaught(ChannelHandlerContext ctx,Throwable cause){
         cause.printStackTrace();
         ctx.close();
+    }
+
+    private void fireClientPing(ChannelHandlerContext ctx) {
+        // Data body: namespace of the client.
+        ClusterRequest<String> ping = new ClusterRequest<String>().setId(0)
+                .setType(ClusterConstants.MSG_TYPE_PING)
+                .setData(ConfigSupplierRegistry.getNamespaceSupplier().get());
+        ctx.writeAndFlush(ping);
     }
 }
