@@ -5,4 +5,5 @@ package test1.hashMapTest;
  * @date 2020/1/6 13:58
  */
 public interface Test1 {
+
 }

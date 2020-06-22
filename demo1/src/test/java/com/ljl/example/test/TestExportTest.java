@@ -9,6 +9,7 @@ import com.ljl.example.util.SoaResponseUtil;
 import com.ljl.note.collection.live.domain.bo.LiveRoomInfoBO;
 import com.ljl.note.collection.live.domain.dto.LiveRoomInfoGetDTO;
 import com.ljl.note.collection.live.service.LiveRoomExport;
+import org.apache.http.message.BasicNameValuePair;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,16 @@ public class TestExportTest {
         System.out.println(JSON.toJSONString(liveRoomInfoBO));*/
     }
 
-    @Test
+   /* @Test
     public void test2(){
-        /*String s=SoaResponseUtil.unpack(testExportImpl.getTest());
-        System.out.println(s);*/
-    }
+        NameValuePair[] data = {
+                new NameValuePair("startTime",""),
+                new NameValuePair("endTime","")
+
+        };
+
+        new BasicNameValuePair();
+        *//*String s=SoaResponseUtil.unpack(testExportImpl.getTest());
+        System.out.println(s);*//*
+    }*/
 }

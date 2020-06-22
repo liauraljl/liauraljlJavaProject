@@ -21,6 +21,7 @@ public class ThreadPoolDemo {
     }
 
     public static void main(String[] args){
+        int nThreads = Runtime.getRuntime().availableProcessors();
         MyTask task=new MyTask();
         ExecutorService es= Executors.newFixedThreadPool(6);
         /*Executors.newCachedThreadPool();
