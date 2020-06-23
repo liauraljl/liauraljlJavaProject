@@ -28,6 +28,7 @@ import java.util.AbstractMap;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * @author jinlei.li
@@ -46,7 +47,10 @@ public class NettyClient {
 
     private final AtomicBoolean shouldRetry = new AtomicBoolean(true);
 
-    private ConcurrentHashMap<Integer,Long> startTimes=new ConcurrentHashMap<>();
+    private ConcurrentHashMap<Integer, Long> startTimes = new ConcurrentHashMap<>();
+
+    private AtomicLong successCounter = new AtomicLong(0);
+    private AtomicLong requestCounter = new AtomicLong(0);
 
 
     public static final int RECONNECT_DELAY_MS = 2000;
@@ -58,13 +62,13 @@ public class NettyClient {
     private static final ExecutorService executorService = Executors.newFixedThreadPool(32);
 
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
 
         new NettyClient().start();
     }
 
     private void start() {
-        CountDownLatch countDownLatch=new CountDownLatch(1);
+        CountDownLatch countDownLatch = new CountDownLatch(1);
         ExecutorService executorService = Executors.newFixedThreadPool(2);
         Bootstrap b = new Bootstrap();
         executorService.execute(() -> {
@@ -82,23 +86,23 @@ public class NettyClient {
                                 ch.pipeline().addLast(new NettyResponseDecoder());
                                 ch.pipeline().addLast(new LengthFieldPrepender(2));
                                 ch.pipeline().addLast(new NettyRequestEncoder());
-                                ch.pipeline().addLast(new ClientHandler(currentState,null));
+                                ch.pipeline().addLast(new ClientHandler(currentState, null));
                             }
                         });
                 b.connect("127.0.0.1", 11111)
                         .addListener(new GenericFutureListener<ChannelFuture>() {
-                                @Override
-                                public void operationComplete(ChannelFuture future) {
-                                    if (future.cause() != null) {
-                                        System.err.println("Could not connect,cause:"+future.cause());
-                                        channel = null;
-                                    } else {
-                                        channel = future.channel();
+                            @Override
+                            public void operationComplete(ChannelFuture future) {
+                                if (future.cause() != null) {
+                                    System.err.println("Could not connect,cause:" + future.cause());
+                                    channel = null;
+                                } else {
+                                    channel = future.channel();
 
-                                    }
-                                    countDownLatch.countDown();
                                 }
-                });
+                                countDownLatch.countDown();
+                            }
+                        });
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -116,7 +120,7 @@ public class NettyClient {
             try {
                 try {
                     countDownLatch.await();
-                    for(int i=0;i<3;i++){
+                    for (int i = 0; i < 30; i++) {
                         executorService.submit(testThread);
                     }
                 } catch (InterruptedException e) {
@@ -156,10 +160,10 @@ public class NettyClient {
         }
     }
 
-    private Runnable testThread=new Runnable() {
+    private Runnable testThread = new Runnable() {
         @Override
         public void run() {
-            while (true){
+            while (true) {
                 int xid = getCurrentId();
                 try {
                     startTimes.put(xid, System.currentTimeMillis());
@@ -174,19 +178,25 @@ public class NettyClient {
                     ChannelPromise promise = channel.newPromise();
                     TokenClientPromiseHolder.putPromise(xid, promise);
 
-
+                    long requestNum = requestCounter.incrementAndGet();
                     if (!promise.await(ClusterClientConfigManager.getRequestTimeout())) {
+                        System.out.println("request num:" + requestNum);
                         System.err.println("request time out !!!!");
+                    } else {
+                        long successNUm = successCounter.incrementAndGet();
+                        AbstractMap.SimpleEntry<ChannelPromise, ClusterResponse> entry = TokenClientPromiseHolder.getEntry(xid);
+                        //System.out.println("client耗时：" + (System.currentTimeMillis() - startTimes.get(entry.getValue().getId())));
+                        if (successNUm % 1000 == 0) {
+                            System.out.println("success num:" + successNUm);
+                            System.out.println("client耗时：" + (System.currentTimeMillis() - startTimes.get(entry.getValue().getId())));
+                        }
                     }
-                    AbstractMap.SimpleEntry<ChannelPromise, ClusterResponse> entry = TokenClientPromiseHolder.getEntry(xid);
-                    System.out.println("client耗时：" + (System.currentTimeMillis() - startTimes.get(entry.getValue().getId())));
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
         }
     };
-
 
 
     private int getCurrentId() {

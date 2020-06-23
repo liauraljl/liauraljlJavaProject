@@ -34,7 +34,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
-        System.out.println("client received:"+msg);
+        //System.out.println("client received:"+msg);
         if(msg instanceof ClusterResponse){
             ClusterResponse<?> response = (ClusterResponse) msg;
 
