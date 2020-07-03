@@ -1,6 +1,5 @@
 package test1.ioTest.nettyTest.echo.client3;
 
-import com.alibaba.csp.sentinel.cluster.client.codec.netty.NettyRequestEncoder;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -24,9 +23,9 @@ public class EchoClient3 {
                         ChannelPipeline pipeline = ch.pipeline();
 
                         pipeline.addLast(new LengthFieldBasedFrameDecoder(1024, 0, 2, 0, 2));
-                        pipeline.addLast(new NettyResponseDecoder());
+                        //pipeline.addLast(new NettyResponseDecoder());
                         pipeline.addLast(new LengthFieldPrepender(2));
-                        pipeline.addLast(new NettyRequestEncoder());
+                        //pipeline.addLast(new NettyRequestEncoder());
                         //pipeline.addLast(clientHandler);
                     }
                 });
